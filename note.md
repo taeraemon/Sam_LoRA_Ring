@@ -65,6 +65,24 @@ python3 -m tykim_scripts.01_demo_sam \
 
 
 # Train
+applied config.yaml
+```
+DATASET:
+  TRAIN_PATH: "./dataset/train"
+  TEST_PATH: "./dataset/test"
+
+SAM:
+  CHECKPOINT: "./sam_vit_b_01ec64.pth"
+  RANK: 512
+TRAIN:
+  BATCH_SIZE: 1
+  NUM_EPOCHS: 200
+```
+
+```
+python3 train.py
+```
+
 
 
 ----------------------------------------------------------------
@@ -75,6 +93,23 @@ python3 -m tykim_scripts.01_demo_sam \
 
 ----------------------------------------------------------------
 # Demo with LoRA SAM
+
+```
+python3 -m tykim_scripts.04_demo_lorasam \
+--image ./dataset/test/images/ring_test_1.jpg \
+--box_xyxy 103 373 906 613 \
+--lora_weights lora_rank512.safetensors \
+--rank 512
+```
+
+```
+python3 -m tykim_scripts.04_demo_lorasam \
+--image ./dataset/test/images/ring_test_2.jpg \
+--box_xyxy 184 223 466 577 \
+--lora_weights lora_rank512.safetensors \
+--rank 512
+```
+
 
 
 # Evaluation
