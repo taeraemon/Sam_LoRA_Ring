@@ -52,20 +52,20 @@ for epoch in range(num_epochs):
     epoch_losses = []
 
     for i, batch in enumerate(tqdm(train_dataloader)):
-      
-      outputs = model(batched_input=batch,
-                      multimask_output=False)
+        
+        outputs = model(batched_input=batch,
+                        multimask_output=False)
 
-      stk_gt, stk_out = utils.stacking_batch(batch, outputs)
-      stk_out = stk_out.squeeze(1)
-      stk_gt = stk_gt.unsqueeze(1) # We need to get the [B, C, H, W] starting from [H, W]
-      loss = seg_loss(stk_out, stk_gt.float().to(device))
-      
-      optimizer.zero_grad()
-      loss.backward()
-      # optimize
-      optimizer.step()
-      epoch_losses.append(loss.item())
+        stk_gt, stk_out = utils.stacking_batch(batch, outputs)
+        stk_out = stk_out.squeeze(1)
+        stk_gt = stk_gt.unsqueeze(1) # We need to get the [B, C, H, W] starting from [H, W]
+        loss = seg_loss(stk_out, stk_gt.float().to(device))
+        
+        optimizer.zero_grad()
+        loss.backward()
+        # optimize
+        optimizer.step()
+        epoch_losses.append(loss.item())
 
     print(f'EPOCH: {epoch}')
     print(f'Mean loss training: {mean(epoch_losses)}')
